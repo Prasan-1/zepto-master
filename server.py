@@ -135,5 +135,4 @@ if search_query:
     include_unrated = include_unrated_checkbox.checkbox("Include unrated products", value=True)
 
     filtered_df = apply_filters(df, brands, min_rating, max_rating, include_unrated)
-    st.text("Column 1 is the serial number of the product in the original dataset.")
     st.dataframe(filtered_df,hide_index=True)
