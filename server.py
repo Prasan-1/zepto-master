@@ -9,7 +9,7 @@ import os
 name = 'model'
 # model_name = os.path.join('.', name)
 model_name="sentence-transformers/all-MiniLM-L12-v2"
-embeddings = np.load('description.npy')
+embeddings = np.load('description_clean.npy')
 df_max = pd.read_csv(os.path.join('.','data','flipkart_com-ecommerce_sample.csv'))
 
 tokenizer = AutoTokenizer.from_pretrained(model_name)
