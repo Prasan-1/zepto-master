@@ -5,6 +5,8 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import os
+import time
+
 
 name = 'model'
 # model_name = os.path.join('.', name)
@@ -45,6 +47,7 @@ def cosine_similarity(vec1, vec2):
      
 
 def search(query, similarity_threshold):
+    start_time = time.time()
     # This is a placeholder for the actual search function
     # data = {
     #     'Brand': ['Brand A', 'Brand B', 'Brand A', 'Brand C', 'Brand B'],
@@ -61,7 +64,10 @@ def search(query, similarity_threshold):
     filtered_df = df_max.iloc[indices_above_threshold][["brand","product_name","description","product_rating"]]
     filtered_df['similarity'] = similarities[indices_above_threshold]
     filtered_df = filtered_df.sort_values(by='similarity', ascending=False)
-    return filtered_df
+    end_time = time.time()
+    response_time = end_time - start_time
+    
+    return filtered_df, response_time
 
 
 # --------------------------- FRONTEND------------------------------------
@@ -87,7 +93,8 @@ search_query = st.text_input("Enter your search query:")
 
 
 if search_query:
-    df = search(search_query, similarity_threshold)
+    df, response_time = search(search_query, similarity_threshold)
+    st.write(f"Query response time: {response_time:.4f} seconds")
     
     df['product_rating'] = pd.to_numeric(df['product_rating'], errors='coerce')
     
