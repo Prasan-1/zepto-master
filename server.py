@@ -119,7 +119,7 @@ if search_query:
     filtered_df = apply_filters(df, [], min_rating, max_rating,include_unrated=True)
 
     all_brands = filtered_df['brand'].dropna().unique()
-    brands = brand_filter.multiselect('All Brands', options=all_brands)
+    brands = brand_filter.multiselect('Filter by Brand', options=all_brands,placeholder="All Brands")
     
     actual_min_rating = filtered_df['product_rating'].min()
     actual_max_rating = filtered_df['product_rating'].max()
