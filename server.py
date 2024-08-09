@@ -17,6 +17,15 @@ df_max = pd.read_csv(os.path.join('.','data','flipkart_com-ecommerce_sample.csv'
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModel.from_pretrained(model_name)
 
+def precision_at_k(relevant_results, k):
+    """
+    Calculate Precision at K
+    relevant_results: list of boolean values indicating if each result is relevant
+    k: the number of top results to consider
+    """
+    if len(relevant_results) < k:
+        return sum(relevant_results) / len(relevant_results)
+    return sum(relevant_results[:k]) / k
 
 def mean_pooling(model_output, attention_mask):
     token_embeddings = model_output[0]  
@@ -86,7 +95,7 @@ def create_redirect_button(url, button_text):
 
 create_redirect_button("https://sites.google.com/view/eda-zepto/home?authuser=0", "Click Here for EDA")
 st.title('Product Search and Filter')
-similarity_threshold = st.slider('Select Similarity Threshold (For Developers, this value should be adjusted in production without the user knowing)', min_value=0.0, max_value=1.0, value=0.3)
+similarity_threshold = st.slider('Select Similarity Threshold (For Developers, this value should be adjusted in production without the user knowing)', min_value=0.0, max_value=1.0, value=0.2)
 # Search box
 search_query = st.text_input("Enter your search query:")
 
@@ -142,4 +151,9 @@ if search_query:
     include_unrated = include_unrated_checkbox.checkbox("Include unrated products", value=True)
 
     filtered_df = apply_filters(df, brands, min_rating, max_rating, include_unrated)
+
+    k = 15 if 15 <= len(filtered_df) else len(filtered_df)
+    relevant_results = [similarity > 0.3 for similarity in filtered_df['similarity'][:k]]
+    p_at_k = precision_at_k(relevant_results, k)
+    st.write(f"Precision at {k}: {p_at_k:.2f}")
     st.dataframe(filtered_df,hide_index=True)
