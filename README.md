@@ -1,3 +1,3 @@
 ﻿# zepto-master
 
-# This is my Secondary Githuib account, Primary one is https://github.com/Pra-San
+# This is my Secondary Github account, Primary one is https://github.com/Pra-San
