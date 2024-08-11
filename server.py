@@ -81,7 +81,7 @@ def search(query, similarity_threshold):
 
 # --------------------------- FRONTEND------------------------------------
 
-st.title('A Sample Data Anylysis and Search Project')
+st.title('A Sample Data Analysis and Search Project')
 
 def create_redirect_button(url, button_text):
     button_html = f"""
