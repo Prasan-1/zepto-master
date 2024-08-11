@@ -81,7 +81,7 @@ def search(query, similarity_threshold):
 
 # --------------------------- FRONTEND------------------------------------
 
-st.title('Pranav Sanand Puligandla 20214548 MNNIT')
+st.title('A Sample Data Anylysis and Search Project')
 
 def create_redirect_button(url, button_text):
     button_html = f"""
